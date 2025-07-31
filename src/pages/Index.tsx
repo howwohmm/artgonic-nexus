@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FilePlus, BarChart2, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2 } from 'lucide-react';
 
@@ -372,19 +371,46 @@ const Index = () => {
         style={{ fontFamily: "'Inter', sans-serif" }} 
         className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-300"
       >
-        <header className="fixed top-0 right-0 p-4 z-50">
-          <button 
-            onClick={toggleTheme} 
-            className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          >
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-        </header>
+        {/* Theme toggle - only show when NOT in a tool view */}
+        {!activeTool && (
+          <header className="fixed top-0 right-0 p-4 z-50">
+            <button 
+              onClick={toggleTheme} 
+              className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          </header>
+        )}
 
+        {/* Tool view with integrated theme toggle */}
         {activeTool && ActiveToolComponent ? (
-          <ToolView toolName={tools.find(t => t.id === activeTool).name} onClose={closeTool}>
-            <ActiveToolComponent />
-          </ToolView>
+          <div className="min-h-screen">
+            <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black">
+              <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                  {tools.find(t => t.id === activeTool).name}
+                </h1>
+                <div className="flex items-center space-x-2">
+                  <button 
+                    onClick={toggleTheme} 
+                    className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  >
+                    {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                  </button>
+                  <button
+                    onClick={closeTool}
+                    className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
+            </header>
+            <main className="max-w-4xl mx-auto px-6 py-8">
+              <ActiveToolComponent />
+            </main>
+          </div>
         ) : (
           <Dashboard tools={tools} onOpenTool={openTool} />
         )}
