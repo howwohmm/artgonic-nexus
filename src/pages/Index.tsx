@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { FilePlus, BarChart2, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2, Share2, User } from 'lucide-react';
+import { FilePlus, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2, User } from 'lucide-react';
 import { sdk } from "@farcaster/miniapp-sdk";
 import { ReminderForm } from '../components/ReminderForm';
 import { ReminderList } from '../components/ReminderList';
@@ -216,6 +217,7 @@ const FinanceTool = () => <div className="text-center py-16">
       Track your expenses, manage subscriptions, and monitor your financial goals. Coming soon!
     </p>
   </div>;
+
 const RemindersTool = () => {
   return (
     <div className="space-y-6">
@@ -263,35 +265,12 @@ const Index = () => {
     }
   };
   
-  // Share on Farcaster
-  const handleShare = async () => {
-    try {
-      await sdk.actions.composeCast({
-        text: "Check out Toooools - a collection of essential mini-tools! 🛠️",
-        embeds: [{
-          url: "https://remind-to-stay-clean-jlk3e60qi-howwohmms-projects.vercel.app"
-        }]
-      });
-    } catch (error) {
-      if (error.name === 'RejectedByUser') {
-        console.log('User rejected the share request');
-      } else {
-        console.error('Share failed:', error);
-      }
-    }
-  };
   const tools = [{
     id: 'ideas',
     name: 'Idea Logger',
     icon: BrainCircuit,
     component: IdeasTool,
     description: 'Capture brainstorms, notes, and sketches.'
-  }, {
-    id: 'finance',
-    name: 'Finance Tracker',
-    icon: BarChart2,
-    component: FinanceTool,
-    description: 'Track expenses and subscriptions.'
   }, {
     id: 'reminders',
     name: 'Reminders',
@@ -308,69 +287,65 @@ const Index = () => {
   const openTool = toolId => setActiveTool(toolId);
   const closeTool = () => setActiveTool(null);
   const ActiveToolComponent = tools.find(t => t.id === activeTool)?.component;
-  return <>
-      <FontLoader />
-      <div style={{
-      fontFamily: "'Inter', sans-serif"
-    }} className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-300">
-        {/* Theme toggle and Farcaster buttons - only show when NOT in a tool view */}
-        {!activeTool && <header className="fixed top-0 right-0 p-4 z-50 flex items-center space-x-2">
-            {/* Farcaster Sign In */}
-            {!user ? (
-              <button 
-                onClick={handleSignIn} 
-                disabled={isLoading}
-                className="flex items-center space-x-2 px-3 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50 transition-colors"
-              >
-                <User size={16} />
-                <span className="text-sm font-medium">
+  
+  return <div style={{ fontFamily: "'Inter', sans-serif" }} className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-300">
+      {/* Sign In and Theme toggle - only show when NOT in a tool view */}
+      {!activeTool && <header className="fixed top-0 right-0 p-4 z-50 flex items-center space-x-2">
+          {/* Farcaster Sign In */}
+          {!user ? (
+            <button 
+              onClick={handleSignIn} 
+              disabled={isLoading}
+              className="group bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl p-3 cursor-pointer transition-all duration-200 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm disabled:opacity-50"
+            >
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
+                  <User size={16} className="text-gray-700 dark:text-gray-300" />
+                </div>
+                <span className="text-sm font-medium text-gray-900 dark:text-white">
                   {isLoading ? 'Signing in...' : 'Sign in'}
                 </span>
-              </button>
-            ) : (
-              <div className="flex items-center space-x-2 px-3 py-2 rounded-full bg-green-600 text-white">
-                <User size={16} />
-                <span className="text-sm font-medium">Signed in</span>
               </div>
-            )}
-            
-            {/* Share on Farcaster */}
-            <button 
-              onClick={handleShare}
-              className="flex items-center space-x-2 px-3 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-            >
-              <Share2 size={16} />
-              <span className="text-sm font-medium">Share</span>
             </button>
-            
-            {/* Theme toggle */}
-            <button onClick={toggleTheme} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-          </header>}
-
-        {/* Tool view with integrated theme toggle */}
-        {activeTool && ActiveToolComponent ? <div className="min-h-screen">
-            <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black">
-              <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Toooools
-                </h1>
-                <div className="flex items-center space-x-2">
-                  <button onClick={toggleTheme} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                  </button>
-                  <button onClick={closeTool} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    <X size={20} />
-                  </button>
+          ) : (
+            <div className="bg-white dark:bg-black border border-green-200 dark:border-green-700 rounded-2xl p-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-green-100 dark:bg-green-800 rounded-lg flex items-center justify-center">
+                  <User size={16} className="text-green-700 dark:text-green-300" />
                 </div>
+                <span className="text-sm font-medium text-green-900 dark:text-green-100">Signed in</span>
               </div>
-            </header>
-            <main className="max-w-4xl mx-auto px-6 py-8">
-              <ActiveToolComponent />
-            </main>
-          </div> : <Dashboard tools={tools} onOpenTool={openTool} />}
-      </div>
-    </>;
+            </div>
+          )}
+          
+          {/* Theme toggle */}
+          <button onClick={toggleTheme} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </header>}
+
+      {/* Tool view with integrated theme toggle */}
+      {activeTool && ActiveToolComponent ? <div className="min-h-screen">
+          <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black">
+            <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Toooools
+              </h1>
+              <div className="flex items-center space-x-2">
+                <button onClick={toggleTheme} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+                <button onClick={closeTool} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <X size={20} />
+                </button>
+              </div>
+            </div>
+          </header>
+          <main className="max-w-4xl mx-auto px-6 py-8">
+            <ActiveToolComponent />
+          </main>
+        </div> : <Dashboard tools={tools} onOpenTool={openTool} />}
+    </div>;
 };
+
 export default Index;
