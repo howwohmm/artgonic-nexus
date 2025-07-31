@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FilePlus, BarChart2, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2 } from 'lucide-react';
+import Logo from '../components/Logo';
 
 // Font Loader Component
 const FontLoader = () => {
@@ -25,8 +26,10 @@ const Dashboard = ({
   return <div className="min-h-screen flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-4xl">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Toooools</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">A set of essential mini-tools by Ohm. </p>
+          <div className="flex justify-center mb-6">
+            <Logo size="lg" />
+          </div>
+          <p className="text-lg text-gray-600 dark:text-gray-400">A set of essential mini-tools for productivity and creativity</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -289,11 +292,12 @@ const Index = () => {
             </button>
           </header>}
 
-        {/* Tool view with integrated theme toggle */}
+        {/* Tool view with integrated theme toggle and logo */}
         {activeTool && ActiveToolComponent ? <div className="min-h-screen">
             <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black">
               <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                <Logo size="sm" showText={false} />
+                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white flex-1 text-center">
                   {tools.find(t => t.id === activeTool).name}
                 </h1>
                 <div className="flex items-center space-x-2">
