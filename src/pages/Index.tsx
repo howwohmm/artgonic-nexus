@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FilePlus, BarChart2, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2, Share2, User } from 'lucide-react';
 import { sdk } from "@farcaster/miniapp-sdk";
+import { ReminderForm } from '../components/ReminderForm';
+import { ReminderList } from '../components/ReminderList';
 
 // Dashboard Component
 const Dashboard = ({
@@ -214,15 +216,24 @@ const FinanceTool = () => <div className="text-center py-16">
       Track your expenses, manage subscriptions, and monitor your financial goals. Coming soon!
     </p>
   </div>;
-const RemindersTool = () => <div className="text-center py-16">
-    <Bell size={64} className="mx-auto mb-6 text-gray-400 dark:text-gray-600" />
-    <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-      Reminders
-    </h2>
-    <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-      Never miss important tasks and deadlines. Set smart reminders and get notified. Coming soon!
-    </p>
-  </div>;
+const RemindersTool = () => {
+  return (
+    <div className="space-y-6">
+      <div className="text-center mb-8">
+        <Bell size={48} className="mx-auto mb-4 text-gray-400 dark:text-gray-600" />
+        <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">
+          Reminders
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+          Never miss important tasks and deadlines. Set smart reminders and get notified.
+        </p>
+      </div>
+      
+      <ReminderForm />
+      <ReminderList />
+    </div>
+  );
+};
 
 // Main App Component
 const Index = () => {
