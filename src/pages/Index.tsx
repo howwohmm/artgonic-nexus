@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { FilePlus, BarChart2, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2, User } from 'lucide-react';
+import { FilePlus, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2, User } from 'lucide-react';
 import { sdk } from "@farcaster/miniapp-sdk";
 
 // Dashboard Component
@@ -206,15 +206,6 @@ const PomodoroTool = () => {
 };
 
 // Placeholder Tool Components
-const FinanceTool = () => <div className="text-center py-16">
-    <BarChart2 size={64} className="mx-auto mb-6 text-gray-400 dark:text-gray-600" />
-    <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-      Finance Tracker
-    </h2>
-    <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-      Track your expenses, manage subscriptions, and monitor your financial goals. Coming soon!
-    </p>
-  </div>;
 const RemindersTool = () => <div className="text-center py-16">
     <Bell size={64} className="mx-auto mb-6 text-gray-400 dark:text-gray-600" />
     <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
@@ -259,12 +250,6 @@ const Index = () => {
     icon: BrainCircuit,
     component: IdeasTool,
     description: 'Capture brainstorms, notes, and sketches.'
-  }, {
-    id: 'finance',
-    name: 'Finance Tracker',
-    icon: BarChart2,
-    component: FinanceTool,
-    description: 'Track expenses and subscriptions.'
   }, {
     id: 'reminders',
     name: 'Reminders',
