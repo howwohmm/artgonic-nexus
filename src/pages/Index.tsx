@@ -26,7 +26,7 @@ const Dashboard = ({
       <div className="w-full max-w-4xl">
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Toooools</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">A set of essential mini-tools by Ohm. </p>
+          <p className="text-lg text-gray-600 dark:text-gray-400">A set of essential mini-tools by Ohm. </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -293,8 +293,8 @@ const Index = () => {
         {activeTool && ActiveToolComponent ? <div className="min-h-screen">
             <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-black">
               <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {tools.find(t => t.id === activeTool).name}
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Toooools
                 </h1>
                 <div className="flex items-center space-x-2">
                   <button onClick={toggleTheme} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
