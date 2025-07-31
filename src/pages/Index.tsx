@@ -1,22 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FilePlus, BarChart2, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2 } from 'lucide-react';
 
-// Font Loader Component
-const FontLoader = () => {
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-    return () => {
-      if (document.head.contains(link)) {
-        document.head.removeChild(link);
-      }
-    };
-  }, []);
-  return null;
-};
-
 // Dashboard Component
 const Dashboard = ({
   tools,
@@ -42,7 +26,7 @@ const ToolCard = ({
   onOpen
 }) => {
   const Icon = tool.icon;
-  return <div onClick={onOpen} className="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-8 cursor-pointer transition-all duration-200 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm">
+  return <div onClick={onOpen} className="group bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl p-8 cursor-pointer transition-all duration-200 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm">
       <div className="flex items-center mb-4">
         <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center mr-4 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
           <Icon size={24} className="text-gray-700 dark:text-gray-300" />
@@ -106,7 +90,7 @@ const IdeasTool = () => {
     }
   };
   return <div className="space-y-8">
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+      <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
           Capture New Idea
         </h2>
@@ -118,7 +102,7 @@ const IdeasTool = () => {
         </div>
       </div>
 
-      {ideas.length > 0 && <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+      {ideas.length > 0 && <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
           <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
             Your Ideas ({ideas.length})
           </h2>
@@ -185,7 +169,7 @@ const PomodoroTool = () => {
   const currentSeconds = minutes * 60 + seconds;
   const progress = (totalSeconds - currentSeconds) / totalSeconds * 100;
   return <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-12 text-center max-w-md w-full">
+      <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl p-12 text-center max-w-md w-full">
         <h2 className="text-2xl font-semibold mb-8 text-gray-900 dark:text-white">
           {isBreak ? 'Break Time' : 'Focus Time'}
         </h2>
@@ -278,10 +262,7 @@ const Index = () => {
   const closeTool = () => setActiveTool(null);
   const ActiveToolComponent = tools.find(t => t.id === activeTool)?.component;
   return <>
-      <FontLoader />
-      <div style={{
-      fontFamily: "'Inter', sans-serif"
-    }} className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-300">
+      <div className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-300">
         {/* Theme toggle - only show when NOT in a tool view */}
         {!activeTool && <header className="fixed top-0 right-0 p-4 z-50">
             <button onClick={toggleTheme} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
