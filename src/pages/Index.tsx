@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FilePlus, BarChart2, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2 } from 'lucide-react';
+import { FilePlus, BarChart2, Bell, BrainCircuit, X, Play, Pause, RotateCcw, Sun, Moon, Trash2, Share2, User } from 'lucide-react';
+import sdk from "@farcaster/miniapp-sdk";
 
 // Font Loader Component
 const FontLoader = () => {
@@ -243,12 +244,47 @@ const RemindersTool = () => <div className="text-center py-16">
 const Index = () => {
   const [activeTool, setActiveTool] = useState(null);
   const [theme, setTheme] = useState('dark');
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
   };
+  
   useEffect(() => {
     document.documentElement.className = theme;
   }, [theme]);
+  
+  // Sign in with Farcaster using Quick Auth
+  const handleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      const { token } = await sdk.quickAuth.getToken();
+      setUser({ token });
+    } catch (error) {
+      console.error('Sign in failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // Share on Farcaster
+  const handleShare = async () => {
+    try {
+      await sdk.actions.composeCast({
+        text: "Check out Toooools - a collection of essential mini-tools! 🛠️",
+        embeds: [{
+          url: "https://remind-to-stay-clean-jlk3e60qi-howwohmms-projects.vercel.app"
+        }]
+      });
+    } catch (error) {
+      if (error.name === 'RejectedByUser') {
+        console.log('User rejected the share request');
+      } else {
+        console.error('Share failed:', error);
+      }
+    }
+  };
   const tools = [{
     id: 'ideas',
     name: 'Idea Logger',
@@ -282,8 +318,37 @@ const Index = () => {
       <div style={{
       fontFamily: "'Inter', sans-serif"
     }} className="bg-white dark:bg-black text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-300">
-        {/* Theme toggle - only show when NOT in a tool view */}
-        {!activeTool && <header className="fixed top-0 right-0 p-4 z-50">
+        {/* Theme toggle and Farcaster buttons - only show when NOT in a tool view */}
+        {!activeTool && <header className="fixed top-0 right-0 p-4 z-50 flex items-center space-x-2">
+            {/* Farcaster Sign In */}
+            {!user ? (
+              <button 
+                onClick={handleSignIn} 
+                disabled={isLoading}
+                className="flex items-center space-x-2 px-3 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50 transition-colors"
+              >
+                <User size={16} />
+                <span className="text-sm font-medium">
+                  {isLoading ? 'Signing in...' : 'Sign in'}
+                </span>
+              </button>
+            ) : (
+              <div className="flex items-center space-x-2 px-3 py-2 rounded-full bg-green-600 text-white">
+                <User size={16} />
+                <span className="text-sm font-medium">Signed in</span>
+              </div>
+            )}
+            
+            {/* Share on Farcaster */}
+            <button 
+              onClick={handleShare}
+              className="flex items-center space-x-2 px-3 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+            >
+              <Share2 size={16} />
+              <span className="text-sm font-medium">Share</span>
+            </button>
+            
+            {/* Theme toggle */}
             <button onClick={toggleTheme} className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>

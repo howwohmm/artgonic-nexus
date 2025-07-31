@@ -1,0 +1,36 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"/>
+  
+  <!-- Content -->
+  <g transform="translate(100, 150)">
+    <!-- Title -->
+    <text x="0" y="80" font-family="Inter, sans-serif" font-size="72" font-weight="bold" fill="white">
+      Toooools
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="140" font-family="Inter, sans-serif" font-size="32" fill="rgba(255,255,255,0.9)">
+      Essential Mini Tools by Ohm
+    </text>
+    
+    <!-- Tool icons -->
+    <g transform="translate(800, 50)">
+      <!-- Ideas -->
+      <circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.2)"/>
+      <text x="50" y="60" text-anchor="middle" font-family="Inter, sans-serif" font-size="24" fill="white">💡</text>
+      
+      <!-- Pomodoro -->
+      <circle cx="150" cy="50" r="40" fill="rgba(255,255,255,0.2)"/>
+      <text x="150" y="60" text-anchor="middle" font-family="Inter, sans-serif" font-size="24" fill="white">⏰</text>
+      
+      <!-- Finance -->
+      <circle cx="250" cy="50" r="40" fill="rgba(255,255,255,0.2)"/>
+      <text x="250" y="60" text-anchor="middle" font-family="Inter, sans-serif" font-size="24" fill="white">💰</text>
+      
+      <!-- Reminders -->
+      <circle cx="350" cy="50" r="40" fill="rgba(255,255,255,0.2)"/>
+      <text x="350" y="60" text-anchor="middle" font-family="Inter, sans-serif" font-size="24" fill="white">🔔</text>
+    </g>
+  </g>
+</svg> 
