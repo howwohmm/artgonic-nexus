@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Check, Trash2, Edit, Clock, AlertTriangle } from 'lucide-react';
 import { Reminder } from '../types/reminder';
@@ -5,8 +6,8 @@ import { formatDateTime, isOverdue, isToday } from '../utils/dateUtils';
 
 interface ReminderItemProps {
   reminder: Reminder;
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
+  onToggle: (id: string) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
   onEdit: (reminder: Reminder) => void;
 }
 
@@ -17,6 +18,7 @@ export const ReminderItem: React.FC<ReminderItemProps> = ({
   onEdit,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isToggling, setIsToggling] = useState(false);
 
   const handleDelete = async () => {
     if (confirm('Are you sure you want to delete this reminder?')) {
@@ -28,6 +30,17 @@ export const ReminderItem: React.FC<ReminderItemProps> = ({
       } finally {
         setIsDeleting(false);
       }
+    }
+  };
+
+  const handleToggle = async () => {
+    setIsToggling(true);
+    try {
+      await onToggle(reminder.id);
+    } catch (error) {
+      console.error('Failed to toggle reminder:', error);
+    } finally {
+      setIsToggling(false);
     }
   };
 
@@ -70,8 +83,9 @@ export const ReminderItem: React.FC<ReminderItemProps> = ({
     }`}>
       <div className="flex items-start gap-3">
         <button
-          onClick={() => onToggle(reminder.id)}
-          className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
+          onClick={handleToggle}
+          disabled={isToggling}
+          className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors disabled:opacity-50 ${
             reminder.completed
               ? 'bg-green-600 border-green-600'
               : 'border-gray-300 dark:border-gray-600 hover:border-green-500'
@@ -133,4 +147,4 @@ export const ReminderItem: React.FC<ReminderItemProps> = ({
       </div>
     </div>
   );
-}; 
+};
