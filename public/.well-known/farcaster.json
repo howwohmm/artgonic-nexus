@@ -4,7 +4,7 @@
     "payload": "eyJkb21haW4iOiJhcnRnb25pYy1uZXh1cy52ZXJjZWwuYXBwIn0",
     "signature": "LLtzQEgm/3FmkuhMd6G0JYdxdEcv3NN1sTqN/iJps+4H2N/V6pNA9BRkUub2W33dWAarmXAMTWiOotT360NDVBw="
   },
-  "miniapp": {
+  "frame": {
     "version": "1",
     "name": "Toooools",
     "description": "A set of essential mini-tools by Ohm - ideas, pomodoro timer, finance tracker, and reminders",
@@ -25,10 +25,7 @@
     "ogTitle": "Toooools - Essential Mini Tools",
     "ogDescription": "A set of essential mini-tools by Ohm - ideas, pomodoro timer, finance tracker, and reminders",
     "ogImageUrl": "https://artgonic-nexus.vercel.app/og-image.svg",
-    "castShareUrl": "https://artgonic-nexus.vercel.app"
-  },
-  "frame": {
-    "imageUrl": "https://artgonic-nexus.vercel.app/og-image.svg",
+    "castShareUrl": "https://artgonic-nexus.vercel.app",
     "postUrl": "https://artgonic-nexus.vercel.app"
   }
 } 
