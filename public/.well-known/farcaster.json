@@ -1,8 +1,25 @@
 {
+  "version": "1.0.0",
   "name": "Toooools",
   "description": "A set of essential mini-tools by Ohm - ideas, pomodoro timer, finance tracker, and reminders",
   "iconUrl": "https://artgonic-nexus.vercel.app/icon.svg",
   "homeUrl": "https://artgonic-nexus.vercel.app",
+  "imageUrl": "https://artgonic-nexus.vercel.app/og-image.svg",
+  "buttonTitle": "Open Toooools",
+  "splashImageUrl": "https://artgonic-nexus.vercel.app/og-image.svg",
+  "splashBackgroundColor": "#6366F1",
+  "subtitle": "Essential Mini Tools",
+  "screenshotUrls": [
+    "https://artgonic-nexus.vercel.app/og-image.svg"
+  ],
+  "primaryCategory": "productivity",
+  "tags": ["productivity", "tools", "reminders", "pomodoro", "ideas"],
+  "heroImageUrl": "https://artgonic-nexus.vercel.app/og-image.svg",
+  "tagline": "Essential mini-tools for productivity",
+  "ogTitle": "Toooools - Essential Mini Tools",
+  "ogDescription": "A set of essential mini-tools by Ohm - ideas, pomodoro timer, finance tracker, and reminders",
+  "ogImageUrl": "https://artgonic-nexus.vercel.app/og-image.svg",
+  "castShareUrl": "https://artgonic-nexus.vercel.app",
   "accountAssociation": {
     "header": "eyJmaWQiOjEwMTE0MDAsInR5cGUiOiJhdXRoIiwia2V5IjoiMHgxYzVkMDQ5YThlRGY4NzY5ZkVEODQ2NWY1NzEwYzc3MTQ3YzI3MGIwIn0",
     "payload": "eyJkb21haW4iOiJhcnRnb25pYy1uZXh1cy52ZXJjZWwuYXBwIn0",

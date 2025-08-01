@@ -1,72 +1,147 @@
+
 import { useState, useEffect } from 'react';
 import { Reminder } from '../types/reminder';
-
-const STORAGE_KEY = 'toooools-reminders';
+import { supabase } from '../integrations/supabase/client';
+import { useToast } from './use-toast';
 
 export const useReminders = () => {
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
-  // Load reminders from localStorage
+  // Load reminders from Supabase
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setReminders(parsed);
-      }
-    } catch (error) {
-      console.error('Failed to load reminders:', error);
-    } finally {
-      setLoading(false);
-    }
+    fetchReminders();
   }, []);
 
-  // Save reminders to localStorage
-  const saveReminders = (newReminders: Reminder[]) => {
+  const fetchReminders = async () => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newReminders));
-      setReminders(newReminders);
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('reminders')
+        .select('*')
+        .order('due_date', { ascending: true });
+
+      if (error) {
+        console.error('Failed to fetch reminders:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load reminders. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      setReminders(data || []);
     } catch (error) {
-      console.error('Failed to save reminders:', error);
+      console.error('Failed to fetch reminders:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load reminders. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   // Add a new reminder
-  const addReminder = (reminderData: Omit<Reminder, 'id' | 'created_at' | 'updated_at'>) => {
-    const newReminder: Reminder = {
-      ...reminderData,
-      id: crypto.randomUUID(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
+  const addReminder = async (reminderData: Omit<Reminder, 'id' | 'created_at' | 'updated_at'>) => {
+    try {
+      const { data, error } = await supabase
+        .from('reminders')
+        .insert([reminderData])
+        .select()
+        .single();
 
-    const updatedReminders = [...reminders, newReminder];
-    saveReminders(updatedReminders);
-    return newReminder;
+      if (error) {
+        console.error('Failed to add reminder:', error);
+        toast({
+          title: "Error",
+          description: "Failed to add reminder. Please try again.",
+          variant: "destructive"
+        });
+        throw error;
+      }
+
+      setReminders(prev => [...prev, data]);
+      toast({
+        title: "Success",
+        description: "Reminder created successfully!"
+      });
+      
+      return data;
+    } catch (error) {
+      console.error('Failed to add reminder:', error);
+      throw error;
+    }
   };
 
   // Update a reminder
-  const updateReminder = (id: string, updates: Partial<Reminder>) => {
-    const updatedReminders = reminders.map(reminder => 
-      reminder.id === id 
-        ? { ...reminder, ...updates, updated_at: new Date().toISOString() }
-        : reminder
-    );
-    saveReminders(updatedReminders);
+  const updateReminder = async (id: string, updates: Partial<Reminder>) => {
+    try {
+      const { data, error } = await supabase
+        .from('reminders')
+        .update({ ...updates, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Failed to update reminder:', error);
+        toast({
+          title: "Error",
+          description: "Failed to update reminder. Please try again.",
+          variant: "destructive"
+        });
+        throw error;
+      }
+
+      setReminders(prev => 
+        prev.map(reminder => 
+          reminder.id === id ? data : reminder
+        )
+      );
+    } catch (error) {
+      console.error('Failed to update reminder:', error);
+      throw error;
+    }
   };
 
   // Delete a reminder
-  const deleteReminder = (id: string) => {
-    const updatedReminders = reminders.filter(reminder => reminder.id !== id);
-    saveReminders(updatedReminders);
+  const deleteReminder = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('reminders')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        console.error('Failed to delete reminder:', error);
+        toast({
+          title: "Error",
+          description: "Failed to delete reminder. Please try again.",
+          variant: "destructive"
+        });
+        throw error;
+      }
+
+      setReminders(prev => prev.filter(reminder => reminder.id !== id));
+      toast({
+        title: "Success",
+        description: "Reminder deleted successfully!"
+      });
+    } catch (error) {
+      console.error('Failed to delete reminder:', error);
+      throw error;
+    }
   };
 
   // Toggle completion status
-  const toggleComplete = (id: string) => {
+  const toggleComplete = async (id: string) => {
     const reminder = reminders.find(r => r.id === id);
     if (reminder) {
-      updateReminder(id, { completed: !reminder.completed });
+      await updateReminder(id, { completed: !reminder.completed });
     }
   };
 
@@ -109,5 +184,6 @@ export const useReminders = () => {
     getOverdueReminders,
     getTodayReminders,
     getUpcomingReminders,
+    refreshReminders: fetchReminders,
   };
-}; 
+};
