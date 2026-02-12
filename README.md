@@ -1,55 +1,17 @@
-# Toooools - Farcaster Mini App
+# artgonic-nexus
 
-A collection of essential mini-tools by Ohm, now available as a Farcaster Mini App!
+> A Farcaster miniapp toolkit with essential productivity tools.
 
-## Features
+![Status: Experiment](https://img.shields.io/badge/Status-Experiment-yellow)
 
-- **Idea Logger**: Capture brainstorms, notes, and sketches
-- **Pomodoro Timer**: Boost productivity with focused work sessions
-- **Finance Tracker**: Track expenses and subscriptions (coming soon)
-- **Reminders**: Manage tasks and get notifications (coming soon)
+## What It Does
 
-## Farcaster Integration
+A collection of mini-tools packaged as a Farcaster miniapp. Includes reminders, brainstorming aids, and other utilities. Built with the Farcaster SDK for in-app integration.
 
-This Mini App includes:
-- **Sign in with Farcaster**: Authenticate users with their Farcaster account
-- **Share on Farcaster**: Let users share the app with their followers
-- **Mini App SDK**: Full integration with Farcaster's Mini App ecosystem
+## Tech Stack
 
-## Development
+`React` `Vite` `TypeScript` `Farcaster SDK` `Supabase` `shadcn/ui` `Tailwind CSS` `TanStack Query`
 
-```bash
-# Install dependencies
-npm install
+---
 
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
-## Deployment
-
-This Mini App is configured to deploy to Vercel at:
-`https://remind-to-stay-clean-jlk3e60qi-howwohmms-projects.vercel.app`
-
-## Farcaster Mini App Setup
-
-The app includes:
-- Farcaster Mini App manifest at `/.well-known/farcaster.json`
-- OpenGraph meta tags for proper embedding
-- Mini App SDK integration for authentication and sharing
-
-## Technologies Used
-
-- Vite
-- React
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
-- @farcaster/miniapp-sdk
-
-## Original Project
-
-This was converted from the original artgonic-nexus project, which was a collection of mini-tools built with Lovable.
+*Built by [Om](https://github.com/howwohmm)*
